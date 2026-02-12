@@ -22,7 +22,33 @@ const API_KEY = "live_lRW1l5W4UDtMdIrVQRYjMzqUMCyANuT2gKwtFnhM7yOj6vjvYYNLD5L874
  * This function should execute immediately.
  */
 
+async function initialLoad() {
 
+  const url = "https://api.thecatapi.com/v1/breeds";
+  try {
+    const response = await fetch(url);
+    console.log('Response:', response);
+
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+
+    const breeds = await response.json();
+    console.log('Breeds:', breeds);
+
+    breeds.forEach(breed => {
+      const newOption = document.createElement('option');
+      newOption.value = breed.id;
+      newOption.textContent = breed.name;
+      breedSelect.appendChild(newOption);
+    });
+
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+//initialLoad();
 
 /**
  * 2. Create an event handler for breedSelect that does the following:
