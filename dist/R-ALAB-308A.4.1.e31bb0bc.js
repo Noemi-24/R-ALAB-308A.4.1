@@ -12321,6 +12321,50 @@ function _initialLoad() {
 }
 initialLoad();
 
+// {
+//   "weight":{
+//     "imperial":"7  -  10",
+//     "metric":"3 - 5"
+//   },
+//   "id":"abys",
+//   "name":"Abyssinian",
+//   "breed_group":null,
+//   "cfa_url":"http://cfa.org/Breeds/BreedsAB/Abyssinian.aspx",
+//   "vetstreet_url":"http://www.vetstreet.com/cats/abyssinian",
+//   "vcahospitals_url":"https://vcahospitals.com/know-your-pet/cat-breeds/abyssinian",
+//   "temperament":"Active, Energetic, Independent, Intelligent, Gentle",
+//   "origin":"Egypt",
+//   "country_codes":"EG",
+//   "country_code":"EG",
+//   "description":"The Abyssinian is easy to care for, and a joy to have in your home. They’re affectionate cats and love both people and other animals.",
+//   "life_span":"14 - 15",
+//   "indoor":0,
+//   "lap":1,
+//   "alt_names":"",
+//   "adaptability":5,
+//   "affection_level":5,
+//   "child_friendly":3,
+//   "dog_friendly":4,
+//   "energy_level":5,
+//   "grooming":1,
+//   "health_issues":2,
+//   "intelligence":5,
+//   "shedding_level":2,
+//   "social_needs":5,
+//   "stranger_friendly":5,
+//   "vocalisation":1,
+//   "experimental":0,
+//   "hairless":0,
+//   "natural":1,
+//   "rare":0,
+//   "rex":0,
+//   "suppressed_tail":0,
+//   "short_legs":0,
+//   "wikipedia_url":"https://en.wikipedia.org/wiki/Abyssinian_(cat)",
+//   "hypoallergenic":0,
+//   "reference_image_id":"0XYvRd7oD"
+// }
+
 /**
  * 2. Create an event handler for breedSelect that does the following:
  * - Retrieve information on the selected breed from the cat API using fetch().
@@ -12335,52 +12379,51 @@ initialLoad();
  * - Each new selection should clear, re-populate, and restart the Carousel.
  * - Add a call to this function to the end of your initialLoad function above to create the initial carousel.
  */
-breedSelect.addEventListener("click", function () {
-  function loadBreed() {
-    return _loadBreed.apply(this, arguments);
-  }
-  function _loadBreed() {
-    _loadBreed = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-      var breedType, url, response, breeds, _t;
-      return _regenerator().w(function (_context) {
-        while (1) switch (_context.p = _context.n) {
-          case 0:
-            breedType = breed.id;
-            url = "https://api.thecatapi.com/v1/images/search?breed_ids=".concat(breedType);
-            _context.p = 1;
-            _context.n = 2;
-            return fetch(url);
-          case 2:
-            response = _context.v;
-            if (response.ok) {
-              _context.n = 3;
-              break;
-            }
-            throw new Error("Response status: ".concat(response.status));
-          case 3:
-            _context.n = 4;
-            return response.json();
-          case 4:
-            breeds = _context.v;
-            //console.log('Breeds:', breeds);
-
-            breeds.forEach(function (breed) {
-              //Carousel.appendCarousel(breed);
-            });
-            _context.n = 6;
-            break;
-          case 5:
-            _context.p = 5;
-            _t = _context.v;
-            console.error(_t.message);
-          case 6:
-            return _context.a(2);
+breedSelect.addEventListener("click", /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+  var breedType, url, response, breeds, _t;
+  return _regenerator().w(function (_context) {
+    while (1) switch (_context.p = _context.n) {
+      case 0:
+        breedType = breed.id;
+        url = "https://api.thecatapi.com/v1/images/search?breed_ids=".concat(breedType);
+        _context.p = 1;
+        _context.n = 2;
+        return fetch(url);
+      case 2:
+        response = _context.v;
+        if (response.ok) {
+          _context.n = 3;
+          break;
         }
-      }, _callee, null, [[1, 5]]);
-    }));
-    return _loadBreed.apply(this, arguments);
-  }
-});
+        throw new Error("Response status: ".concat(response.status));
+      case 3:
+        _context.n = 4;
+        return response.json();
+      case 4:
+        breeds = _context.v;
+        //console.log('Breeds:', breeds);
+
+        breeds.forEach(function (breed) {
+          Carousel.appendCarousel(breed);
+        });
+        _context.n = 6;
+        break;
+      case 5:
+        _context.p = 5;
+        _t = _context.v;
+        console.error(_t.message);
+      case 6:
+        return _context.a(2);
+    }
+  }, _callee, null, [[1, 5]]);
+})));
+
+// {
+//   "id":"UhqCZ7tC4",
+//   "url":"https://cdn2.thecatapi.com/images/UhqCZ7tC4.jpg",
+//   "width":1600,
+//   "height":1200
+// }
 
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."
