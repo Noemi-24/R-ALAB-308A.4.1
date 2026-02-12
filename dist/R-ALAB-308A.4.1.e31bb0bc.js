@@ -12275,7 +12275,52 @@ var API_KEY = "live_lRW1l5W4UDtMdIrVQRYjMzqUMCyANuT2gKwtFnhM7yOj6vjvYYNLD5L874yp
  */
 function initialLoad() {
   return _initialLoad.apply(this, arguments);
-} //initialLoad();
+}
+function _initialLoad() {
+  _initialLoad = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
+    var url, response, breeds, _t2;
+    return _regenerator().w(function (_context2) {
+      while (1) switch (_context2.p = _context2.n) {
+        case 0:
+          url = "https://api.thecatapi.com/v1/breeds";
+          _context2.p = 1;
+          _context2.n = 2;
+          return fetch(url);
+        case 2:
+          response = _context2.v;
+          console.log('Response:', response);
+          if (response.ok) {
+            _context2.n = 3;
+            break;
+          }
+          throw new Error("Response status: ".concat(response.status));
+        case 3:
+          _context2.n = 4;
+          return response.json();
+        case 4:
+          breeds = _context2.v;
+          console.log('Breeds:', breeds);
+          breeds.forEach(function (breed) {
+            var newOption = document.createElement('option');
+            newOption.value = breed.id;
+            newOption.textContent = breed.name;
+            breedSelect.appendChild(newOption);
+          });
+          _context2.n = 6;
+          break;
+        case 5:
+          _context2.p = 5;
+          _t2 = _context2.v;
+          console.error(_t2.message);
+        case 6:
+          return _context2.a(2);
+      }
+    }, _callee2, null, [[1, 5]]);
+  }));
+  return _initialLoad.apply(this, arguments);
+}
+initialLoad();
+
 /**
  * 2. Create an event handler for breedSelect that does the following:
  * - Retrieve information on the selected breed from the cat API using fetch().
@@ -12290,6 +12335,53 @@ function initialLoad() {
  * - Each new selection should clear, re-populate, and restart the Carousel.
  * - Add a call to this function to the end of your initialLoad function above to create the initial carousel.
  */
+breedSelect.addEventListener("click", function () {
+  function loadBreed() {
+    return _loadBreed.apply(this, arguments);
+  }
+  function _loadBreed() {
+    _loadBreed = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+      var breedType, url, response, breeds, _t;
+      return _regenerator().w(function (_context) {
+        while (1) switch (_context.p = _context.n) {
+          case 0:
+            breedType = breed.id;
+            url = "https://api.thecatapi.com/v1/images/search?breed_ids=".concat(breedType);
+            _context.p = 1;
+            _context.n = 2;
+            return fetch(url);
+          case 2:
+            response = _context.v;
+            if (response.ok) {
+              _context.n = 3;
+              break;
+            }
+            throw new Error("Response status: ".concat(response.status));
+          case 3:
+            _context.n = 4;
+            return response.json();
+          case 4:
+            breeds = _context.v;
+            //console.log('Breeds:', breeds);
+
+            breeds.forEach(function (breed) {
+              //Carousel.appendCarousel(breed);
+            });
+            _context.n = 6;
+            break;
+          case 5:
+            _context.p = 5;
+            _t = _context.v;
+            console.error(_t.message);
+          case 6:
+            return _context.a(2);
+        }
+      }, _callee, null, [[1, 5]]);
+    }));
+    return _loadBreed.apply(this, arguments);
+  }
+});
+
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."
  */
@@ -12308,6 +12400,7 @@ function initialLoad() {
  * - Add a console.log statement to indicate when requests begin.
  * - As an added challenge, try to do this on your own without referencing the lesson material.
  */
+
 /**
  * 6. Next, we'll create a progress bar to indicate the request is in progress.
  * - The progressBar element has already been created for you.
@@ -12323,6 +12416,7 @@ function initialLoad() {
  *   once or twice per request to this API. This is still a concept worth familiarizing yourself
  *   with for future projects.
  */
+
 /**
  * 7. As a final element of progress indication, add the following to your axios interceptors:
  * - In your request interceptor, set the body element's cursor style to "progress."
@@ -12339,49 +12433,6 @@ function initialLoad() {
  *   you delete that favourite using the API, giving this function "toggle" functionality.
  * - You can call this function by clicking on the heart at the top right of any image.
  */
-function _initialLoad() {
-  _initialLoad = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-    var url, response, breeds, _t;
-    return _regenerator().w(function (_context) {
-      while (1) switch (_context.p = _context.n) {
-        case 0:
-          url = "https://api.thecatapi.com/v1/breeds";
-          _context.p = 1;
-          _context.n = 2;
-          return fetch(url);
-        case 2:
-          response = _context.v;
-          console.log('Response:', response);
-          if (response.ok) {
-            _context.n = 3;
-            break;
-          }
-          throw new Error("Response status: ".concat(response.status));
-        case 3:
-          _context.n = 4;
-          return response.json();
-        case 4:
-          breeds = _context.v;
-          console.log('Breeds:', breeds);
-          breeds.forEach(function (breed) {
-            var newOption = document.createElement('option');
-            newOption.value = breed.id;
-            newOption.textContent = breed.name;
-            breedSelect.appendChild(newOption);
-          });
-          _context.n = 6;
-          break;
-        case 5:
-          _context.p = 5;
-          _t = _context.v;
-          console.error(_t.message);
-        case 6:
-          return _context.a(2);
-      }
-    }, _callee, null, [[1, 5]]);
-  }));
-  return _initialLoad.apply(this, arguments);
-}
 function favourite(_x) {
   return _favourite.apply(this, arguments);
 }
@@ -12402,13 +12453,13 @@ function favourite(_x) {
  *   your code should account for this.
  */
 function _favourite() {
-  _favourite = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(imgId) {
-    return _regenerator().w(function (_context2) {
-      while (1) switch (_context2.n) {
+  _favourite = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(imgId) {
+    return _regenerator().w(function (_context3) {
+      while (1) switch (_context3.n) {
         case 0:
-          return _context2.a(2);
+          return _context3.a(2);
       }
-    }, _callee2);
+    }, _callee3);
   }));
   return _favourite.apply(this, arguments);
 }

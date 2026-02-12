@@ -48,7 +48,7 @@ async function initialLoad() {
   }
 }
 
-//initialLoad();
+initialLoad();
 
 /**
  * 2. Create an event handler for breedSelect that does the following:
@@ -64,6 +64,33 @@ async function initialLoad() {
  * - Each new selection should clear, re-populate, and restart the Carousel.
  * - Add a call to this function to the end of your initialLoad function above to create the initial carousel.
  */
+breedSelect.addEventListener("click", () => {
+  async function loadBreed(){
+    const breedType = breed.id; 
+    const url = `https://api.thecatapi.com/v1/images/search?breed_ids=${breedType}`;
+
+    try {
+      const response = await fetch(url);
+      //console.log('Response:', response);
+
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      const breeds = await response.json();
+      //console.log('Breeds:', breeds);
+
+      breeds.forEach(breed => {
+        //Carousel.appendCarousel(breed);
+      });
+
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+});
+
+
 
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."
