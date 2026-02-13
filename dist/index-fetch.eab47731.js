@@ -6918,7 +6918,7 @@ exports.clear = clear;
 exports.createCarouselItem = createCarouselItem;
 exports.start = start;
 var bootstrap = _interopRequireWildcard(require("bootstrap"));
-var _index = require("./index.js");
+var _indexFetch = require("./index-fetch.js");
 function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function (e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
 function createCarouselItem(imgSrc, imgAlt, imgId) {
   var template = document.querySelector("#carouselItemTemplate");
@@ -6928,7 +6928,7 @@ function createCarouselItem(imgSrc, imgAlt, imgId) {
   img.alt = imgAlt;
   var favBtn = clone.querySelector(".favourite-button");
   favBtn.addEventListener("click", function () {
-    (0, _index.favourite)(imgId);
+    (0, _indexFetch.favourite)(imgId);
   });
   return clone;
 }
@@ -6975,7 +6975,7 @@ function start() {
     $(multipleCardCarousel).addClass("slide");
   }
 }
-},{"bootstrap":"node_modules/bootstrap/dist/js/bootstrap.esm.js","./index.js":"index.js"}],"node_modules/axios/lib/helpers/bind.js":[function(require,module,exports) {
+},{"bootstrap":"node_modules/bootstrap/dist/js/bootstrap.esm.js","./index-fetch.js":"index-fetch.js"}],"node_modules/axios/lib/helpers/bind.js":[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -12238,7 +12238,7 @@ exports.isCancel = isCancel;
 exports.CanceledError = CanceledError;
 exports.AxiosError = AxiosError;
 exports.Axios = Axios;
-},{"./lib/axios.js":"node_modules/axios/lib/axios.js"}],"index.js":[function(require,module,exports) {
+},{"./lib/axios.js":"node_modules/axios/lib/axios.js"}],"index-fetch.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12672,5 +12672,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
-//# sourceMappingURL=/R-ALAB-308A.4.1.e31bb0bc.js.map
+},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index-fetch.js"], null)
+//# sourceMappingURL=/index-fetch.eab47731.js.map

@@ -111,8 +111,8 @@ initialLoad();
  */
 breedSelect.addEventListener("click", async () => {
   
-  const breedType = breed.id; 
-  const url = `https://api.thecatapi.com/v1/images/search?breed_ids=${breedType}`;
+  const breedType = breedSelect.value; 
+  const url = `https://api.thecatapi.com/v1/images/search?limit=100&breed_ids=${breedType}&api_key=${API_KEY}`;
 
   try {
     const response = await fetch(url);
@@ -122,24 +122,36 @@ breedSelect.addEventListener("click", async () => {
       throw new Error(`Response status: ${response.status}`);
     }
 
-    const breeds = await response.json();
+    const images = await response.json();
     //console.log('Breeds:', breeds);
-
-    breeds.forEach(breed => {
-      Carousel.appendCarousel(breed);
+    Carousel.clear();
+    images.forEach(image => {
+      const catElement = Carousel.createCarouselItem(image.url, image.id, image.id);
+      Carousel.appendCarousel(catElement);
     });
 
+    const catInfo = images[0].breeds[0];
+    infoDump.innerHTML = `
+      <div>
+        <h2>${catInfo.name}</h2>
+      </div>
+      <div>
+        <p><strong>Origin:</strong> ${catInfo.origin}</p>      
+        <p><strong>Description:</strong> ${catInfo.description}</p>
+        <p><strong>Temperament:</strong> ${catInfo.temperament}</p>
+        <p><strong>Life Span:</strong> ${catInfo.life_span} years</p>
+        <p><strong>Weight:</strong> ${catInfo.weight.metric} kg</p>
+        <p><strong>Energy Level:</strong> ${catInfo.energy_level}/5</p>
+        <p><strong>Intelligence:</strong> ${catInfo.intelligence}/5</p>
+        <p><a href="${catInfo.wikipedia_url}" target="_blank">Learn more on Wikipedia</a></p>
+      </dviv>      
+    `;
+    Carousel.start();
   } catch (error) {
     console.error(error.message);
   }
 });
 
-// {
-//   "id":"UhqCZ7tC4",
-//   "url":"https://cdn2.thecatapi.com/images/UhqCZ7tC4.jpg",
-//   "width":1600,
-//   "height":1200
-// }
 
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."
