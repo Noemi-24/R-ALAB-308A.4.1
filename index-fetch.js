@@ -27,14 +27,14 @@ async function initialLoad() {
   const url = "https://api.thecatapi.com/v1/breeds";
   try {
     const response = await fetch(url);
-    console.log('Response:', response);
+    console.log('Response Fetch:', response);
 
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
 
     const breeds = await response.json();
-    console.log('Breeds:', breeds);
+    console.log('Breeds Fetch:', breeds);
 
     breeds.forEach(breed => {
       const newOption = document.createElement('option');
@@ -109,21 +109,19 @@ initialLoad();
  * - Each new selection should clear, re-populate, and restart the Carousel.
  * - Add a call to this function to the end of your initialLoad function above to create the initial carousel.
  */
-breedSelect.addEventListener("click", async () => {
+breedSelect.addEventListener("change", async () => {
   
   const breedType = breedSelect.value; 
   const url = `https://api.thecatapi.com/v1/images/search?limit=100&breed_ids=${breedType}&api_key=${API_KEY}`;
 
   try {
     const response = await fetch(url);
-    //console.log('Response:', response);
 
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
 
     const images = await response.json();
-    //console.log('Breeds:', breeds);
     Carousel.clear();
     images.forEach(image => {
       const catElement = Carousel.createCarouselItem(image.url, image.id, image.id);

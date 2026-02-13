@@ -12170,7 +12170,7 @@ exports.isCancel = isCancel;
 exports.CanceledError = CanceledError;
 exports.AxiosError = AxiosError;
 exports.Axios = Axios;
-},{"./lib/axios.js":"node_modules/axios/lib/axios.js"}],"index-fetch.js":[function(require,module,exports) {
+},{"./lib/axios.js":"node_modules/axios/lib/axios.js"}],"index-axios.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12197,9 +12197,13 @@ var getFavouritesBtn = document.getElementById("getFavouritesBtn");
 // Step 0: Store your API key here for reference and easy access.
 var API_KEY = "live_lRW1l5W4UDtMdIrVQRYjMzqUMCyANuT2gKwtFnhM7yOj6vjvYYNLD5L874yp9nfL";
 
+// Set axios defaults for base URL and API key header
+_axios.default.defaults.baseURL = "https://api.thecatapi.com/v1";
+_axios.default.defaults.headers.common["x-api-key"] = API_KEY;
+
 /**
  * 1. Create an async function "initialLoad" that does the following:
- * - Retrieve a list of breeds from the cat API using fetch().
+ * - Retrieve a list of breeds from the cat API using axios.
  * - Create new <options> for each of these breeds, and append them to breedSelect.
  *  - Each option should have a value attribute equal to the id of the breed.
  *  - Each option should display text equal to the name of the breed.
@@ -12210,154 +12214,43 @@ function initialLoad() {
 }
 function _initialLoad() {
   _initialLoad = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
-    var url, response, breeds, _t2;
+    var response, breeds, _error$response2, _t2;
     return _regenerator().w(function (_context2) {
       while (1) switch (_context2.p = _context2.n) {
         case 0:
-          url = "https://api.thecatapi.com/v1/breeds";
-          _context2.p = 1;
-          _context2.n = 2;
-          return fetch(url);
-        case 2:
+          _context2.p = 0;
+          _context2.n = 1;
+          return _axios.default.get("/breeds");
+        case 1:
           response = _context2.v;
-          console.log('Response:', response);
-          if (response.ok) {
-            _context2.n = 3;
-            break;
-          }
-          throw new Error("Response status: ".concat(response.status));
-        case 3:
-          _context2.n = 4;
-          return response.json();
-        case 4:
-          breeds = _context2.v;
-          console.log('Breeds:', breeds);
+          breeds = response.data;
+          console.log('Breeds Axios:', breeds);
           breeds.forEach(function (breed) {
             var newOption = document.createElement('option');
             newOption.value = breed.id;
             newOption.textContent = breed.name;
             breedSelect.appendChild(newOption);
           });
-          _context2.n = 6;
+          _context2.n = 3;
           break;
-        case 5:
-          _context2.p = 5;
+        case 2:
+          _context2.p = 2;
           _t2 = _context2.v;
-          console.error(_t2.message);
-        case 6:
+          console.error("Error loading breeds:", (_error$response2 = _t2.response) === null || _error$response2 === void 0 ? void 0 : _error$response2.status, _t2.message);
+        case 3:
           return _context2.a(2);
       }
-    }, _callee2, null, [[1, 5]]);
+    }, _callee2, null, [[0, 2]]);
   }));
   return _initialLoad.apply(this, arguments);
 }
 initialLoad();
 
-// {
-//   "weight":{
-//     "imperial":"7  -  10",
-//     "metric":"3 - 5"
-//   },
-//   "id":"abys",
-//   "name":"Abyssinian",
-//   "breed_group":null,
-//   "cfa_url":"http://cfa.org/Breeds/BreedsAB/Abyssinian.aspx",
-//   "vetstreet_url":"http://www.vetstreet.com/cats/abyssinian",
-//   "vcahospitals_url":"https://vcahospitals.com/know-your-pet/cat-breeds/abyssinian",
-//   "temperament":"Active, Energetic, Independent, Intelligent, Gentle",
-//   "origin":"Egypt",
-//   "country_codes":"EG",
-//   "country_code":"EG",
-//   "description":"The Abyssinian is easy to care for, and a joy to have in your home. They’re affectionate cats and love both people and other animals.",
-//   "life_span":"14 - 15",
-//   "indoor":0,
-//   "lap":1,
-//   "alt_names":"",
-//   "adaptability":5,
-//   "affection_level":5,
-//   "child_friendly":3,
-//   "dog_friendly":4,
-//   "energy_level":5,
-//   "grooming":1,
-//   "health_issues":2,
-//   "intelligence":5,
-//   "shedding_level":2,
-//   "social_needs":5,
-//   "stranger_friendly":5,
-//   "vocalisation":1,
-//   "experimental":0,
-//   "hairless":0,
-//   "natural":1,
-//   "rare":0,
-//   "rex":0,
-//   "suppressed_tail":0,
-//   "short_legs":0,
-//   "wikipedia_url":"https://en.wikipedia.org/wiki/Abyssinian_(cat)",
-//   "hypoallergenic":0,
-//   "reference_image_id":"0XYvRd7oD"
-// }
-
-/**
- * 2. Create an event handler for breedSelect that does the following:
- * - Retrieve information on the selected breed from the cat API using fetch().
- *  - Make sure your request is receiving multiple array items!
- *  - Check the API documentation if you're only getting a single object.
- * - For each object in the response array, create a new element for the carousel.
- *  - Append each of these new elements to the carousel.
- * - Use the other data you have been given to create an informational section within the infoDump element.
- *  - Be creative with how you create DOM elements and HTML.
- *  - Feel free to edit index.html and styles.css to suit your needs, but be careful!
- *  - Remember that functionality comes first, but user experience and design are important.
- * - Each new selection should clear, re-populate, and restart the Carousel.
- * - Add a call to this function to the end of your initialLoad function above to create the initial carousel.
- */
-breedSelect.addEventListener("click", /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-  var breedType, url, response, images, catInfo, _t;
-  return _regenerator().w(function (_context) {
-    while (1) switch (_context.p = _context.n) {
-      case 0:
-        breedType = breedSelect.value;
-        url = "https://api.thecatapi.com/v1/images/search?limit=100&breed_ids=".concat(breedType, "&api_key=").concat(API_KEY);
-        _context.p = 1;
-        _context.n = 2;
-        return fetch(url);
-      case 2:
-        response = _context.v;
-        if (response.ok) {
-          _context.n = 3;
-          break;
-        }
-        throw new Error("Response status: ".concat(response.status));
-      case 3:
-        _context.n = 4;
-        return response.json();
-      case 4:
-        images = _context.v;
-        //console.log('Breeds:', breeds);
-        Carousel.clear();
-        images.forEach(function (image) {
-          var catElement = Carousel.createCarouselItem(image.url, image.id, image.id);
-          Carousel.appendCarousel(catElement);
-        });
-        catInfo = images[0].breeds[0];
-        infoDump.innerHTML = "\n      <div>\n        <h2>".concat(catInfo.name, "</h2>\n      </div>\n      <div>\n        <p><strong>Origin:</strong> ").concat(catInfo.origin, "</p>      \n        <p><strong>Description:</strong> ").concat(catInfo.description, "</p>\n        <p><strong>Temperament:</strong> ").concat(catInfo.temperament, "</p>\n        <p><strong>Life Span:</strong> ").concat(catInfo.life_span, " years</p>\n        <p><strong>Weight:</strong> ").concat(catInfo.weight.metric, " kg</p>\n        <p><strong>Energy Level:</strong> ").concat(catInfo.energy_level, "/5</p>\n        <p><strong>Intelligence:</strong> ").concat(catInfo.intelligence, "/5</p>\n        <p><a href=\"").concat(catInfo.wikipedia_url, "\" target=\"_blank\">Learn more on Wikipedia</a></p>\n      </dviv>      \n    ");
-        Carousel.start();
-        _context.n = 6;
-        break;
-      case 5:
-        _context.p = 5;
-        _t = _context.v;
-        console.error(_t.message);
-      case 6:
-        return _context.a(2);
-    }
-  }, _callee, null, [[1, 5]]);
-})));
-
-/**
+/*
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."
  */
-/**
+
+/*
  * 4. Change all of your fetch() functions to axios!
  * - axios has already been imported for you within index.js.
  * - If you've done everything correctly up to this point, this should be simple.
@@ -12366,72 +12259,85 @@ breedSelect.addEventListener("click", /*#__PURE__*/_asyncToGenerator(/*#__PURE__
  *   by setting a default header with your API key so that you do not have to
  *   send it manually with all of your requests! You can also set a default base URL!
  */
-/**
- * 5. Add axios interceptors to log the time between request and response to the console.
- * - Hint: you already have access to code that does this!
- * - Add a console.log statement to indicate when requests begin.
- * - As an added challenge, try to do this on your own without referencing the lesson material.
- */
 
-/**
- * 6. Next, we'll create a progress bar to indicate the request is in progress.
- * - The progressBar element has already been created for you.
- *  - You need only to modify its "width" style property to align with the request progress.
- * - In your request interceptor, set the width of the progressBar element to 0%.
- *  - This is to reset the progress with each request.
- * - Research the axios onDownloadProgress config option.
- * - Create a function "updateProgress" that receives a ProgressEvent object.
- *  - Pass this function to the axios onDownloadProgress config option in your event handler.
- * - console.log your ProgressEvent object within updateProgess, and familiarize yourself with its structure.
- *  - Update the progress of the request using the properties you are given.
- * - Note that we are not downloading a lot of data, so onDownloadProgress will likely only fire
- *   once or twice per request to this API. This is still a concept worth familiarizing yourself
- *   with for future projects.
- */
+breedSelect.addEventListener("change", /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+  var breedType, _first$breeds, response, images, first, catInfo, _error$response, _t;
+  return _regenerator().w(function (_context) {
+    while (1) switch (_context.p = _context.n) {
+      case 0:
+        breedType = breedSelect.value;
+        _context.p = 1;
+        _context.n = 2;
+        return _axios.default.get("/images/search?limit=100&breed_ids=".concat(breedType));
+      case 2:
+        response = _context.v;
+        images = response.data;
+        console.log('Images Axios:', images);
 
-/**
- * 7. As a final element of progress indication, add the following to your axios interceptors:
- * - In your request interceptor, set the body element's cursor style to "progress."
- * - In your response interceptor, remove the progress cursor style from the body element.
- */
-/**
- * 8. To practice posting data, we'll create a system to "favourite" certain images.
- * - The skeleton of this function has already been created for you.
- * - This function is used within Carousel.js to add the event listener as items are created.
- *  - This is why we use the export keyword for this function.
- * - Post to the cat API's favourites endpoint with the given ID.
- * - The API documentation gives examples of this functionality using fetch(); use Axios!
- * - Add additional logic to this function such that if the image is already favourited,
- *   you delete that favourite using the API, giving this function "toggle" functionality.
- * - You can call this function by clicking on the heart at the top right of any image.
- */
+        // Guard: check if we got results
+        if (!(!Array.isArray(images) || images.length === 0)) {
+          _context.n = 3;
+          break;
+        }
+        infoDump.innerHTML = "<p>No images found for this breed.</p>";
+        return _context.a(2);
+      case 3:
+        Carousel.clear();
+        images.forEach(function (image) {
+          var catElement = Carousel.createCarouselItem(image.url, image.id, image.id);
+          Carousel.appendCarousel(catElement);
+        });
+
+        // Guard: check if breed info exists
+        first = images[0];
+        catInfo = first === null || first === void 0 || (_first$breeds = first.breeds) === null || _first$breeds === void 0 ? void 0 : _first$breeds[0];
+        if (catInfo) {
+          infoDump.innerHTML = "\n        <div>\n          <h2>".concat(catInfo.name, "</h2>\n        </div>\n        <div>\n          <p><strong>Origin:</strong> ").concat(catInfo.origin, "</p>      \n          <p><strong>Description:</strong> ").concat(catInfo.description, "</p>\n          <p><strong>Temperament:</strong> ").concat(catInfo.temperament, "</p>\n          <p><strong>Life Span:</strong> ").concat(catInfo.life_span, " years</p>\n          <p><strong>Weight:</strong> ").concat(catInfo.weight.metric, " kg</p>\n          <p><strong>Energy Level:</strong> ").concat(catInfo.energy_level, "/5</p>\n          <p><strong>Intelligence:</strong> ").concat(catInfo.intelligence, "/5</p>\n          <p><a href=\"").concat(catInfo.wikipedia_url, "\" target=\"_blank\">Learn more on Wikipedia</a></p>\n        </div>      \n      ");
+        } else {
+          infoDump.innerHTML = "<p>Breed information not available.</p>";
+        }
+        Carousel.start();
+        _context.n = 5;
+        break;
+      case 4:
+        _context.p = 4;
+        _t = _context.v;
+        console.error("Error loading images:", (_error$response = _t.response) === null || _error$response === void 0 ? void 0 : _error$response.status, _t.message);
+        infoDump.innerHTML = "<p>Error loading cat images. Please try again.</p>";
+      case 5:
+        return _context.a(2);
+    }
+  }, _callee, null, [[1, 4]]);
+})));
+
+// Export favourite function for use in Carousel.js
 function favourite(_x) {
   return _favourite.apply(this, arguments);
 }
-/**
- * 9. Test your favourite() function by creating a getFavourites() function.
- * - Use Axios to get all of your favourites from the cat API.
- * - Clear the carousel and display your favourites when the button is clicked.
- *  - You will have to bind this event listener to getFavouritesBtn yourself.
- *  - Hint: you already have all of the logic built for building a carousel.
- *    If that isn't in its own function, maybe it should be so you don't have to
- *    repeat yourself in this section.
- */
-/**
- * 10. Test your site, thoroughly!
- * - What happens when you try to load the Malayan breed?
- *  - If this is working, good job! If not, look for the reason why and fix it!
- * - Test other breeds as well. Not every breed has the same data available, so
- *   your code should account for this.
- */
 function _favourite() {
   _favourite = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(imgId) {
+    var response, _error$response3, _t3;
     return _regenerator().w(function (_context3) {
-      while (1) switch (_context3.n) {
+      while (1) switch (_context3.p = _context3.n) {
         case 0:
+          _context3.p = 0;
+          _context3.n = 1;
+          return _axios.default.post("/favourites", {
+            image_id: imgId
+          });
+        case 1:
+          response = _context3.v;
+          console.log("Favourite saved:", response.data);
+          _context3.n = 3;
+          break;
+        case 2:
+          _context3.p = 2;
+          _t3 = _context3.v;
+          console.error("Error saving favourite:", (_error$response3 = _t3.response) === null || _error$response3 === void 0 ? void 0 : _error$response3.status, _t3.message);
+        case 3:
           return _context3.a(2);
       }
-    }, _callee3);
+    }, _callee3, null, [[0, 2]]);
   }));
   return _favourite.apply(this, arguments);
 }
@@ -12446,8 +12352,10 @@ exports.clear = clear;
 exports.createCarouselItem = createCarouselItem;
 exports.start = start;
 var bootstrap = _interopRequireWildcard(require("bootstrap"));
-var _indexFetch = require("./index-fetch.js");
+var _indexAxios = require("./index-axios.js");
 function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function (e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
+//import { favourite } from "./index-fetch.js";
+
 function createCarouselItem(imgSrc, imgAlt, imgId) {
   var template = document.querySelector("#carouselItemTemplate");
   var clone = template.content.firstElementChild.cloneNode(true);
@@ -12456,7 +12364,7 @@ function createCarouselItem(imgSrc, imgAlt, imgId) {
   img.alt = imgAlt;
   var favBtn = clone.querySelector(".favourite-button");
   favBtn.addEventListener("click", function () {
-    (0, _indexFetch.favourite)(imgId);
+    (0, _indexAxios.favourite)(imgId);
   });
   return clone;
 }
@@ -12503,7 +12411,7 @@ function start() {
     $(multipleCardCarousel).addClass("slide");
   }
 }
-},{"bootstrap":"node_modules/bootstrap/dist/js/bootstrap.esm.js","./index-fetch.js":"index-fetch.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"bootstrap":"node_modules/bootstrap/dist/js/bootstrap.esm.js","./index-axios.js":"index-axios.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -12528,7 +12436,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59793" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54928" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

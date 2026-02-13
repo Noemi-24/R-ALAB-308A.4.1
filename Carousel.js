@@ -1,5 +1,6 @@
 import * as bootstrap from "bootstrap";
-import { favourite } from "./index-fetch.js";
+import { favourite } from "./index-axios.js";
+//import { favourite } from "./index-fetch.js";
 
 export function createCarouselItem(imgSrc, imgAlt, imgId) {
   const template = document.querySelector("#carouselItemTemplate");

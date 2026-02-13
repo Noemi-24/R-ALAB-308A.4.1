@@ -12288,7 +12288,7 @@ function _initialLoad() {
           return fetch(url);
         case 2:
           response = _context2.v;
-          console.log('Response:', response);
+          console.log('Response Fetch:', response);
           if (response.ok) {
             _context2.n = 3;
             break;
@@ -12299,7 +12299,7 @@ function _initialLoad() {
           return response.json();
         case 4:
           breeds = _context2.v;
-          console.log('Breeds:', breeds);
+          console.log('Breeds Fetch:', breeds);
           breeds.forEach(function (breed) {
             var newOption = document.createElement('option');
             newOption.value = breed.id;
@@ -12379,7 +12379,7 @@ initialLoad();
  * - Each new selection should clear, re-populate, and restart the Carousel.
  * - Add a call to this function to the end of your initialLoad function above to create the initial carousel.
  */
-breedSelect.addEventListener("click", /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
+breedSelect.addEventListener("change", /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
   var breedType, url, response, images, catInfo, _t;
   return _regenerator().w(function (_context) {
     while (1) switch (_context.p = _context.n) {
@@ -12401,7 +12401,6 @@ breedSelect.addEventListener("click", /*#__PURE__*/_asyncToGenerator(/*#__PURE__
         return response.json();
       case 4:
         images = _context.v;
-        //console.log('Breeds:', breeds);
         Carousel.clear();
         images.forEach(function (image) {
           var catElement = Carousel.createCarouselItem(image.url, image.id, image.id);
@@ -12528,7 +12527,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59793" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53034" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
